@@ -29,6 +29,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- 네이버지도 Client Id 지정하기 -->
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="z68p1f0nht" />
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

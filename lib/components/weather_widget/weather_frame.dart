@@ -13,8 +13,6 @@ const String apiKey = 'abe1ce516ab3e461d4bc81d0b5d0e808';
 const String baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
 const String forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast';
 
-void main() => runApp(WeatherFrame());
-
 class WeatherFrame extends StatefulWidget {
   @override
   _WeatherAppState createState() => _WeatherAppState();

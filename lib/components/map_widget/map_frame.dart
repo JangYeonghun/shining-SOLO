@@ -1,4 +1,10 @@
+/*
+개발자: 장영훈
+2023.07.25 ver.1 네이버 지도 연동하여 화면 띄움(geolocator 최신 안정화 버전 하니까 오류 해결됐음)
+ */
+
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 
 // MVC 패턴중 Model
 class DirectionsFrame extends StatefulWidget {
@@ -9,16 +15,11 @@ class DirectionsFrame extends StatefulWidget {
 class _DirectionsFrameState extends State<DirectionsFrame> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.black, // 배경색을 검은색으로 설정
-        child: Center(
-          child: Text(
-            '이곳은 길 찾기 위젯입니다.',
-            style: TextStyle(color: Colors.white, fontSize: 24),
-          ),
-        ),
-      ),
+    return NaverMap(
+      options: const NaverMapViewOptions(),
+      onMapReady: (controller) {
+        print("네이버 맵 로딩됨!");
+      },
     );
   }
 }
