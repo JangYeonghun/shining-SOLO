@@ -7,7 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-const String apiKey = 'abe1ce516ab3e461d4bc81d0b5d0e808';
+const String apiKey = 'openweathermap api key';
 const String baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
 const String forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast';
 
