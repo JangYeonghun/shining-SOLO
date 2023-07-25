@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: DetectingFrame(), // 선택된 페이지에 따라 body를 구성하는 함수 호출
+        body: _buildBody(), // 선택된 페이지에 따라 body를 구성하는 함수 호출
         bottomNavigationBar: BottomBarRoulette(
           onPageSelected: (index) {
             setState(() {
