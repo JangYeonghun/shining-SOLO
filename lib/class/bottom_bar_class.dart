@@ -29,13 +29,15 @@ class _BottomBarRouletteState extends State<BottomBarRoulette> {
         options: CarouselOptions(
           height: 100,
           enlargeCenterPage: true,
-          onPageChanged: (index, reason) {
+          onPageChanged: (index, reason) async {
             setState(() {
               _selectedIndex = index;
               _isFirstTap = true; // 페이지가 변경될 때 마다 첫 번째 누름으로 초기화
             });
             TextToSpeechUtil.speakText(
                 _items[index]); // 페이지가 변경될 때 해당 기능 읽어주기
+
+            await flutterTts.stop(); // TTS 인스턴스 닫기
           },
         ),
       ),
@@ -66,10 +68,12 @@ class _BottomBarRouletteState extends State<BottomBarRoulette> {
     );
   }
 
-  void _handleTap(String item) {
+  Future<void> _handleTap(String item) async {
     // 첫 번째 누름에 따라 TTS 실행
     TextToSpeechUtil.speakText("$item 버튼입니다. 더블클릭하면 해당 기능이 실행됩니다.");
     _isFirstTap = false; // 첫 번째 누름 후에는 더블클릭을 기다리도록 설정
+
+    await flutterTts.stop(); // TTS 인스턴스 닫기
   }
 
   void _handleDoubleTap() {
