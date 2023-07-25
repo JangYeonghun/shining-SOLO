@@ -1,13 +1,28 @@
+/*
+개발자: 장영훈
+2023.07.25 ver.1 bottom_bar_class 연결, 네이버지도 연결, 메인 페이지 제작
+ */
+
 import 'package:flutter/material.dart';
 import 'package:blind_support/class/bottom_bar_class.dart';
 import 'package:blind_support/components//detecting_widget/detecting_frame.dart';
 import 'package:blind_support/components//map_widget/map_frame.dart';
 import 'package:blind_support/components//weather_widget/weather_frame.dart';
 import 'package:blind_support/utility/tts.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 
 
 // MVC 패턴 중 View
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NaverMapSdk.instance.initialize(
+    clientId: "z68p1f0nht",
+    onAuthFailed: (ex) {
+      print("********* 네이버맵 인증오류 : $ex *********");
+    });
+  // 401: 잘못된 클라이언트 ID 지정, 잘못된 클라이언트 유형, 콘솔에 등록된 앱 패키지 이름과 미일치
+  // 429: 콘솔에서 Maps 서비스를 선택하지 않음, 사용 한도 초과
+  // 800: 클라이언트 ID 미지정
   runApp(const MyApp());
 }
 

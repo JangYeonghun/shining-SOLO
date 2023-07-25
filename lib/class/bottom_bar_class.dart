@@ -1,3 +1,8 @@
+/*
+개발자: 장영훈
+2023.07.25 ver.1 하단바 스와이프 형식으로 선택할 수 있고 한번 클릭시 해당 기능을 읽어주고, 더블 클릭시 onPageSelected에 값을 전달해 main.dart에서 body를 바꿀 수 있게 함 
+ */
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_tts/flutter_tts.dart';
