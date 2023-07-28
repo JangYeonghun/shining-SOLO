@@ -36,6 +36,12 @@ dependencies:
   permission_handler: ^9.0.0
   flutter_tts:
   carousel_slider:
+  flutter_vision: ^1.1.1
+  camera: ^0.10.5+2
+  tflite_flutter: ^0.10.1
+
+  flutter_speed_dial:
+  image_picker:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -59,8 +65,12 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/
-
+    - assets/labels.txt
+    - assets/best_float16.tflite
+    - assets/best_float32.tflite
+    - assets/test16.tflite
+    - assets/test32.tflite
+    - assets/labelstest.txt
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
