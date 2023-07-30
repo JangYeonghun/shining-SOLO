@@ -38,7 +38,8 @@ dependencies:
   flutter_vision: ^1.1.1
   camera: ^0.10.5+2
   tflite_flutter: ^0.10.1
-
+  kakao_map_plugin:
+  provider:
   flutter_speed_dial:
   image_picker:
 
