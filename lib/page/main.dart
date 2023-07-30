@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         return DetectingFrame(cameras: cameras);
       case 2:
       // 길 찾기 화면
-        return DirectionsFrame();
+        return MapFrame();
       default:
       // 기본적으로 홈 화면을 보여줌
         return WeatherFrame();

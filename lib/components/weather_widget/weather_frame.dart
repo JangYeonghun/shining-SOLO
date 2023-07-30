@@ -1,4 +1,4 @@
-//2023-07-24 solo_weather.ver1 by han
+//2023-07-24 weather_frame.dart ver1 by han
 //openweathermap api를 통한 gps기반 위치로 15시간 내의 기상 정보와 현재 기상정보 확인 및 tts출력(화면 로딩시 / body영역 터치시)
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
