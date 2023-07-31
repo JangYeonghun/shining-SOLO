@@ -26,7 +26,7 @@ void main() {
     ChangeNotifierProvider(
       create: (context) => MessageData(),
       child: MaterialApp(
-        title: 'Gps Location Update',
+        title: 'Location',
         home: MapFrame(),
       ),
     ),
