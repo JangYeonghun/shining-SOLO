@@ -137,10 +137,14 @@ class _DetectingFrameState extends State<DetectingFrame> {
       if (isDetecting) {
         cameraImage = image;
         yoloOnFrame(image);
-      } else {
-        // Stop the image stream when not detecting
-        controller.stopImageStream();
       }
+    });
+  }
+
+  Future<void> stopDetection() async {
+    setState(() {
+      isDetecting = false;
+      yoloResults.clear();
     });
   }
 
@@ -149,7 +153,10 @@ class _DetectingFrameState extends State<DetectingFrame> {
     // if (yoloResults.isEmpty) return [];
     // double factorX = screen.width / (cameraImage?.height ?? 1);
     // double factorY = screen.height / (cameraImage?.width ?? 1);
-    if (yoloResults.isEmpty || cameraImage == null) return [];
+    if (yoloResults.isEmpty || cameraImage == null) {
+      return [];
+
+    }
 
     double cameraImageWidth = cameraImage!.width.toDouble();
     double cameraImageHeight = cameraImage!.height.toDouble();
