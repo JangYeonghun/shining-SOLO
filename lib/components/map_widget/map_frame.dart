@@ -38,7 +38,7 @@ class MapFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthRepository.initialize(appKey: '	15a4f24f725fd737f13ccd2156f12dad');
     return MaterialApp(
-      title: 'Gps Location Update',
+      title: 'Location',
       home: ChangeNotifierProvider(
         create: (context) => MessageData(), // MessageData 제공
         child: GpsScreen(title: 'Gps Location Update'),
