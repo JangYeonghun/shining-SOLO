@@ -1,5 +1,6 @@
 //2023-09-02 weather_frame.dart ver2 by han
 //openweathermap api를 통한 gps기반 위치로 15시간 내의 기상 정보와 현재 기상정보 확인 및 tts출력(화면 로딩시 / body영역 터치시)
+import 'package:blind_support/components/weather_widget/weather_icon_box.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -178,8 +179,10 @@ class _WeatherAppState extends State<WeatherFrame> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
+    print(weatherData);
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -189,15 +192,42 @@ class _WeatherAppState extends State<WeatherFrame> {
           // 화면을 클릭했을 때 ttsout 내용을 TTS로 재생
           behavior: HitTestBehavior.translucent,
           onTap: () => TextToSpeechUtil.speakText(ttsout),
-          child: Center(
-            child: Text(
-              weatherData,
-              style: TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
-            ),
-          ),
+          child: weatherUI().weatherIconBox(context, weatherData)/*Column(
+            children: [
+              Text(
+                weatherData,
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),*/
         ),
       ),
     );
   }
+  
+  
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     home: Scaffold(
+  //       appBar: AppBar(
+  //         title: Text('날씨 정보'),
+  //       ),
+  //       body: GestureDetector(
+  //         // 화면을 클릭했을 때 ttsout 내용을 TTS로 재생
+  //         behavior: HitTestBehavior.translucent,
+  //         onTap: () => TextToSpeechUtil.speakText(ttsout),
+  //         child: Center(
+  //           child: Text(
+  //             weatherData,
+  //             style: TextStyle(fontSize: 20),
+  //             textAlign: TextAlign.center,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
