@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'dart:collection'; // 큐를 사용하기 위한 라이브러리
 import 'package:camera/camera.dart';
 import 'package:flutter_vision/flutter_vision.dart';
 
@@ -24,6 +25,7 @@ class _DetectingFrameState extends State<DetectingFrame> {
   late CameraController controller;
   late FlutterVision vision;
   late List<Map<String, dynamic>> yoloResults;
+  Queue<List<Map<String, dynamic>>> resultQueue = Queue();
   CameraImage? cameraImage;
   bool isLoaded = false;
   bool isDetecting = false;
@@ -119,11 +121,24 @@ class _DetectingFrameState extends State<DetectingFrame> {
       confThreshold: 0.4,
       classThreshold: 0.5,
     );
+
+    // 결과를 큐에 추가합니다.
+    resultQueue.add(result);
+
+    // 큐의 크기를 최대 3으로 제한합니다.
+    if (resultQueue.length > 6) {
+      resultQueue.removeFirst();
+    }
+
     if (result.isNotEmpty) {
       setState(() {
         yoloResults = result;
       });
-    }
+    } else if (resultQueue.every((result) => result.isEmpty)) {
+      setState(() {
+        yoloResults.clear();
+      });    }
+    print('나는 isNotEmpty11-11$yoloResults');
   }
 
   Future<void> startDetection() async {
@@ -170,27 +185,38 @@ class _DetectingFrameState extends State<DetectingFrame> {
 
     Color colorPick = const Color.fromARGB(255, 50, 233, 30);
 
-    return yoloResults.map((result) {
-      return Positioned(
-        left: result["box"][0] * factorX,
-        top: result["box"][1] * factorY,
-        width: (result["box"][2] - result["box"][0]) * factorX,
-        height: (result["box"][3] - result["box"][1]) * factorY,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-            border: Border.all(color: Colors.pink, width: 2.0),
-          ),
-          child: Text(
-            "${result['tag']} ${(result['box'][4] * 100).toStringAsFixed(0)}%",
-            style: TextStyle(
-              background: Paint()..color = colorPick,
-              color: Colors.white,
-              fontSize: 18.0,
+    List<Widget> boxes = [];
+
+    for (var result in yoloResults) {
+      double left = result["box"][0] * factorX;
+      double top = result["box"][1] * factorY;
+      double width = (result["box"][2] - result["box"][0]) * factorX;
+      double height = (result["box"][3] - result["box"][1]) * factorY;
+
+      boxes.add(
+        Positioned(
+          left: left,
+          top: top,
+          width: width,
+          height: height,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              border: Border.all(color: Colors.pink, width: 2.0),
+            ),
+            child: Text(
+              "${result['tag']} ${(result['box'][4] * 100).toStringAsFixed(0)}%",
+              style: TextStyle(
+                background: Paint()..color = colorPick,
+                color: Colors.white,
+                fontSize: 18.0,
+              ),
             ),
           ),
         ),
       );
-    }).toList();
+    }
+
+    return boxes;
   }
 }
