@@ -72,6 +72,13 @@ flutter:
     - assets/test32.tflite
     - assets/labelstest.txt
     - assets/img/
+  fonts:
+    - family: NanumGothic
+      fonts:
+        - asset: assets/font/NanumGothic-Bold.ttf
+        - asset: assets/font/NanumGothic-ExtraBold.ttf
+        - asset: assets/font/NanumGothic-Regular.ttf
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

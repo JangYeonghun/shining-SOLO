@@ -33,30 +33,30 @@ class weatherUI {
 
     final String currentWeather = lines[2].substring(7);
     final String currentLocal = lines[0].substring(6);
-    final String currentTemperature = lines[1].substring(6);
+    final String currentTemperature = lines[1].substring(7);
 
     final String weather1 = lines[5].substring(30);
-    final String temperature1 = lines[5].substring(21, 27);
+    final String temperature1 = lines[5].substring(22, 27);
     final String time1 = lines[5].substring(11, 16);
     final String date1 = lines[5].substring(5, 10);
 
     final String weather2 = lines[6].substring(30);
-    final String temperature2 = lines[6].substring(21, 27);
+    final String temperature2 = lines[6].substring(22, 27);
     final String time2 = lines[6].substring(11, 16);
     final String date2 = lines[6].substring(5, 10);
 
     final String weather3 = lines[7].substring(30);
-    final String temperature3 = lines[7].substring(21, 27);
+    final String temperature3 = lines[7].substring(22, 27);
     final String time3 = lines[7].substring(11, 16);
     final String date3 = lines[7].substring(5, 10);
 
     final String weather4 = lines[8].substring(30);
-    final String temperature4 = lines[8].substring(21, 27);
+    final String temperature4 = lines[8].substring(22, 27);
     final String time4 = lines[8].substring(11, 16);
     final String date4 = lines[8].substring(5, 10);
 
     final String weather5 = lines[9].substring(30);
-    final String temperature5 = lines[9].substring(21, 27);
+    final String temperature5 = lines[9].substring(22, 27);
     final String time5 = lines[9].substring(11, 16);
     final String date5 = lines[9].substring(5, 10);
 
@@ -85,21 +85,24 @@ class weatherUI {
                   padding: EdgeInsets.all(boxWidth * 0.05),
                   child: Column(
                     children: [
-                      Container(width: boxWidth*5,
+                      SizedBox(width: boxWidth*5,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            SizedBox(width: boxWidth*3.2, height: boxHeight*1.5,
+                            SizedBox(width: boxWidth*2, height: boxHeight*1.2,
                                 child: Image.asset(weatherToIcon(currentWeather))),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(currentLocal, style: TextStyle(
                                   fontSize: 30,
-                                  fontWeight: FontWeight.bold
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'NanumGothic'
                                 )),
+                                SizedBox(height: boxHeight*0.08),
                                 Text(currentTemperature, style: TextStyle(
-                                  fontSize: 20
+                                  fontSize: 22,
+                                  fontFamily: 'NanumGothic'
                                 ))
                               ]
                             )
@@ -130,7 +133,7 @@ class weatherUI {
   }
 
   Widget futureWeather(String weather, String temperature, String time, String date) {
-    return Container(height: boxHeight*0.85,
+    return Container(height: boxHeight*0.9,
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 255, 255, 255),
         borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -144,19 +147,23 @@ class weatherUI {
         ]
       ),
       child: Padding(
-          padding: EdgeInsets.all(boxWidth * 0.07),
+          padding: EdgeInsets.all(boxWidth * 0.06),
           child: Column(
             children: [
               SizedBox(width: 60, height: 60,
                   child: Image.asset(weatherToIcon(weather))),
               Text(temperature, style: TextStyle(
                   fontSize: 16,
+                  fontFamily: 'NanumGothic'
               )),
+              SizedBox(height: boxHeight*0.06),
               Text('${date.substring(0, 2)}월 ${date.substring(3, 5)}일', style: TextStyle(
-                fontSize: 14
+                fontSize: 13,
+                fontFamily: 'NanumGothic'
               )),
               Text(time, style: TextStyle(
                 fontSize: 18,
+                fontFamily: 'NanumGothic'
               ))
             ]
           ),
@@ -169,14 +176,13 @@ class weatherUI {
     String rainTime = '';
     if (umbrella.substring(0, 9) == '비가 오는 시간은') {
       shiny = false;
+      if (umbrella.substring(10, 12) == "내일") {
+        rainTime = umbrella.substring(10,21);
+      } else {
+        rainTime = '오늘 ${umbrella.substring(10,18)}';
+      }
     } else {
       shiny =true;
-    }
-    
-    if (umbrella.substring(10, 12) == "내일") {
-      rainTime = umbrella.substring(10,21);
-    } else {
-      rainTime = '오늘 ${umbrella.substring(10,18)}';
     }
 
     return shiny ? noRain() : Container(height: boxHeight*1.1, width: boxWidth*5,
@@ -205,13 +211,16 @@ class weatherUI {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('우산을 챙기세요\n', style: TextStyle(
-                        fontSize: 20
+                        fontSize: 20,
+                        fontFamily: 'NanumGothic'
                       ),),
                       Text(rainTime.substring(0, 6), style: TextStyle(
-                        fontSize: 20
+                        fontSize: 20,
+                        fontFamily: 'NanumGothic'
                       ),),
                       Text(rainTime.substring(6), style: TextStyle(
-                        fontSize: 35
+                        fontSize: 35,
+                        fontFamily: 'NanumGothic'
                       ),)
                     ]
                 ),
@@ -245,7 +254,8 @@ class weatherUI {
                   child: Image.asset('assets/img/flower.png'),
                 ),
                 Text('비 예보가 없어요', style: TextStyle(
-                  fontSize: 20
+                  fontSize: 20,
+                  fontFamily: 'NanumGothic'
                 ))
               ]
             )
