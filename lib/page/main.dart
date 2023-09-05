@@ -5,6 +5,7 @@
 2023.07.28 ver.2 네이버 지도 삭제
  */
 
+import 'package:blind_support/components/background/background.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:blind_support/components/bottom_bar_widget/bottom_bar_class.dart';
@@ -37,7 +38,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: _buildBody(), // 선택된 페이지에 따라 body를 구성하는 함수 호출
+        body: Stack(
+          children: [
+            _buildBody(),
+            BackgroundModule()
+          ],
+        ), // 선택된 페이지에 따라 body를 구성하는 함수 호출
         bottomNavigationBar: BottomBarRoulette(
           onPageSelected: (index) {
             setState(() {
@@ -61,7 +67,7 @@ class _MyAppState extends State<MyApp> {
         return DetectingFrame(cameras: cameras);
       case 2:
       // 길 찾기 화면
-      //   return MapFrame();
+         return MapFrame();
       default:
       // 기본적으로 홈 화면을 보여줌
         return WeatherFrame();
