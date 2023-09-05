@@ -30,6 +30,7 @@ class _BottomBarRouletteState extends State<BottomBarRoulette> {
   Widget build(BuildContext context) {
     return Container(
       height: 150,
+      color: Colors.black,
       child: CarouselSlider(
         items: _items.map((item) => _buildCarouselItem(item)).toList(),
         options: CarouselOptions(

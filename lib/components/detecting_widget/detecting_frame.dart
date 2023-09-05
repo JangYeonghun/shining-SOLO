@@ -7,6 +7,8 @@
 +단계추가
  */
 
+import 'package:blind_support/components/detecting_widget/drawbox.dart';
+import 'package:blind_support/const/const.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection'; // 큐를 사용하기 위한 라이브러리
 import 'package:camera/camera.dart';
@@ -29,6 +31,10 @@ class _DetectingFrameState extends State<DetectingFrame> {
   CameraImage? cameraImage;
   bool isLoaded = false;
   bool isDetecting = false;
+  double boxWidth = 0;
+  double boxHeight = 0;
+  double cameraWidth = 0;
+  double cameraHeight = 0;
 
   @override
   void initState() {
@@ -39,8 +45,11 @@ class _DetectingFrameState extends State<DetectingFrame> {
   init() async {
     final cameras = await availableCameras();
     vision = FlutterVision();
-    controller = CameraController(cameras[0], ResolutionPreset.low);
+    controller = CameraController(cameras[0], ResolutionPreset.high);
     controller.initialize().then((value) {
+      final currentResolution = controller.value.previewSize;
+      cameraWidth = currentResolution!.width;
+      cameraHeight = currentResolution!.height;
       loadYoloModel().then((value) {
         setState(() {
           isLoaded = true;
@@ -73,7 +82,13 @@ class _DetectingFrameState extends State<DetectingFrame> {
       startDetection(); // 카메라 스트리밍 시작
     }
 
-    final bottomNavigationBarHeight = kBottomNavigationBarHeight; // 하단바 높이 가져오기
+    const bottomNavigationBarHeight = kBottomNavigationBarHeight; // 하단바 높이 가져오기
+    print('아아아아아아아아아$bottomNavigationBarHeight');
+
+    // 카메라 위젯의 크기를 GlobalKey를 통해 얻어옵니다.
+    final cameraWidgetSize = (context.findRenderObject() as RenderBox).size;
+    boxWidth = ScreenSizeHelper.getDisplayWidth(context) * ScreenSizeHelper.getDevicePixelRatio(context);
+    boxHeight = ScreenSizeHelper.getDisplayHeight(context) * ScreenSizeHelper.getDevicePixelRatio(context);
 
     return Scaffold(
       appBar: AppBar(title: Text('Object Detection')),
@@ -86,7 +101,7 @@ class _DetectingFrameState extends State<DetectingFrame> {
             right: 0,
             child: CameraPreview(controller),
           ),
-          ...displayBoxesAroundRecognizedObjects(MediaQuery.of(context).size),
+          ...DrawBox(boxWidth: boxWidth, boxHeight: boxHeight, cameraWidth: cameraWidth, cameraHeight: cameraHeight).displayBoxesAroundRecognizedObjects(yoloResults, cameraImage),
 
           // ...displayBoxesAroundRecognizedObjects(
           //   Size(
@@ -163,60 +178,5 @@ class _DetectingFrameState extends State<DetectingFrame> {
     });
   }
 
-  List<Widget> displayBoxesAroundRecognizedObjects(Size screen) {
-    // final bottomNavigationBarHeight = kBottomNavigationBarHeight; // 하단바 높이 가져오기
-    // if (yoloResults.isEmpty) return [];
-    // double factorX = screen.width / (cameraImage?.height ?? 1);
-    // double factorY = screen.height / (cameraImage?.width ?? 1);
-    if (yoloResults.isEmpty || cameraImage == null) {
-      return [];
 
-    }
-
-    double cameraImageWidth = cameraImage!.width.toDouble();
-    double cameraImageHeight = cameraImage!.height.toDouble();
-
-    // 난 이게 왜 가능한지 모르겠다 씹 쨋든 된다 나중에 좀더 수정해 보자
-    // 이건 그냥 던져봤는데 된거고
-    // 사실 bottomNavigationBarHeight 이거를 height에 더하려고 했었다
-    // 지금은 시간이 없으니 나중에 해보자
-    double factorX = screen.width / cameraImageWidth;
-    double factorY = screen.width / cameraImageHeight;
-
-    Color colorPick = const Color.fromARGB(255, 50, 233, 30);
-
-    List<Widget> boxes = [];
-
-    for (var result in yoloResults) {
-      double left = result["box"][0] * factorX;
-      double top = result["box"][1] * factorY;
-      double width = (result["box"][2] - result["box"][0]) * factorX;
-      double height = (result["box"][3] - result["box"][1]) * factorY;
-
-      boxes.add(
-        Positioned(
-          left: left,
-          top: top,
-          width: width,
-          height: height,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              border: Border.all(color: Colors.pink, width: 2.0),
-            ),
-            child: Text(
-              "${result['tag']} ${(result['box'][4] * 100).toStringAsFixed(0)}%",
-              style: TextStyle(
-                background: Paint()..color = colorPick,
-                color: Colors.white,
-                fontSize: 18.0,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return boxes;
-  }
 }
