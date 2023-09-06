@@ -91,7 +91,7 @@ class _DetectingFrameState extends State<DetectingFrame> {
     boxHeight = ScreenSizeHelper.getDisplayHeight(context) * ScreenSizeHelper.getDevicePixelRatio(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Object Detection')),
+      appBar: AppBar(backgroundColor: Color(0xAFDFDFFF), title: Text('Object Detection')),
       body: Stack(
         children: [
           Positioned(

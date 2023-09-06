@@ -185,7 +185,7 @@ class _WeatherAppState extends State<WeatherFrame> {
     try {
       return MaterialApp(
         home: Scaffold(
-          appBar: AppBar(
+          appBar: AppBar(backgroundColor: Color(0xAFDFDFFF),
             title: Text('날씨 정보'),
           ),
           body: GestureDetector(
@@ -200,7 +200,7 @@ class _WeatherAppState extends State<WeatherFrame> {
       print(e);
       return MaterialApp(
         home: Scaffold(
-          appBar: AppBar(
+          appBar: AppBar(backgroundColor: Color(0xAFDFDFFF),
             title: Center(child: Text('날씨 정보')),
           ),
           body: GestureDetector(
