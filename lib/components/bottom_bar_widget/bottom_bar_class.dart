@@ -30,7 +30,7 @@ class _BottomBarRouletteState extends State<BottomBarRoulette> {
   Widget build(BuildContext context) {
     return Container(
       height: 150,
-      color: Colors.black,
+      color: Color(0xDFDFDFFF),
       child: CarouselSlider(
         items: _items.map((item) => _buildCarouselItem(item)).toList(),
         options: CarouselOptions(
@@ -57,18 +57,28 @@ class _BottomBarRouletteState extends State<BottomBarRoulette> {
         _handleTap(item);
       },
       child: Container(
-        width: 250,
-        decoration: BoxDecoration(
-          color: Colors.blue,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Center(
-          child: Text(
-            item,
-            style: TextStyle(fontSize: 24, color: Colors.white),
+          decoration: const BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromARGB(50, 0, 0, 0),
+                    blurRadius: 5.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(1, 5)
+                )
+              ]
           ),
-        ),
-      ),
+          child: Padding(
+            padding: EdgeInsets.all(1),
+            child: Center(
+              child: Text(
+                item,
+                style: TextStyle(fontSize: 24, color: Colors.black, fontFamily: 'NanumGothic'),
+              ),
+            ),
+          )
+      )
     );
   }
 
