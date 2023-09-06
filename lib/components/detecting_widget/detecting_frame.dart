@@ -177,6 +177,4 @@ class _DetectingFrameState extends State<DetectingFrame> {
       yoloResults.clear();
     });
   }
-
-
 }
