@@ -8,6 +8,7 @@
  */
 
 import 'package:blind_support/components/detecting_widget/drawbox.dart';
+import 'package:blind_support/components/detecting_widget/speak_detected.dart';
 import 'package:blind_support/const/const.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection'; // 큐를 사용하기 위한 라이브러리
@@ -64,6 +65,7 @@ class _DetectingFrameState extends State<DetectingFrame> {
   @override
   void dispose() async {
     super.dispose();
+    stopDetection();
     controller.dispose();
     await vision.closeYoloModel();
   }
@@ -149,10 +151,12 @@ class _DetectingFrameState extends State<DetectingFrame> {
       setState(() {
         yoloResults = result;
       });
+      SpeakDetected().speakDetectedObjects(result);
     } else if (resultQueue.every((result) => result.isEmpty)) {
       setState(() {
         yoloResults.clear();
-      });    }
+      });
+    }
     print('나는 isNotEmpty11-11$yoloResults');
   }
 
@@ -177,6 +181,4 @@ class _DetectingFrameState extends State<DetectingFrame> {
       yoloResults.clear();
     });
   }
-
-
 }
